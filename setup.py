@@ -18,7 +18,7 @@ def get_requirements(file_path:str) -> List[str]:
 
 
 setup(
-name = 'ML-DEPLOYMENT',
+name = 'ML-deployment',
 version='0.0.1',
 author = 'vinayak',
 author_email="vinayaktiwari2897@gmail.com",
