@@ -16,9 +16,9 @@ class CustomException(Exception):
 
 
 
-if __name__=="__main__":
-    try:
-        a =2/0
-    except Exception as e:
-        logging.info("DIvide by zero")
-        raise CustomException(e,sys)
+# if __name__=="__main__":
+#     try:
+#         a =2/0
+#     except Exception as e:
+#         logging.info("DIvide by zero")
+#         raise CustomException(e,sys)
