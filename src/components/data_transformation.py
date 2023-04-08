@@ -6,7 +6,7 @@ import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder,StandardScaler
+from sklearn.preprocessing import OneHotEncoder,StandardScaler,RobustScaler
 
 from src.logger import logging
 from src.exception import CustomException
@@ -49,7 +49,7 @@ class DataTransformation:
                 steps = [
                     ("imputer",SimpleImputer(strategy="most_frequent")),
                     ("one_hot_encoder",OneHotEncoder()),
-                    ("scaler",StandardScaler(with_mean=False))
+                    ("scaler",RobustScaler(with_centering=False))
                 ]
             )
 
@@ -96,8 +96,8 @@ class DataTransformation:
             input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
 
-            train_arr = np.c_[input_feature_train_arr,np.array(input_feature_train_df)]
-            test_arr = np.c_[input_feature_test_arr,np.array(input_feature_test_df)]
+            train_arr = np.c_[input_feature_train_arr,np.array(target_feature_train_df)]
+            test_arr = np.c_[input_feature_test_arr,np.array(target_feature_test_df)]
 
             logging.info(f"saved preprocessing object")
 
@@ -106,14 +106,12 @@ class DataTransformation:
                 obj = preprocessing_obj
             )
 
-
-
             return (
                 train_arr,
                 test_arr,
                 self.data_transformation_config.preprocessor_obj_file_path,
             )
-
+        
 
         except Exception as e:
             raise CustomException(e,sys)
